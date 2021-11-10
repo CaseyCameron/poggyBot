@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 const { token } = require('./config.json');
+const { countPogs, sendPogMessage } = require('./utils/bot-utils.js');
 
 const client = new Client({
   intents: [
@@ -9,6 +10,8 @@ const client = new Client({
   ]
 });
 
+
+// add /slash commands to a collection
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
@@ -17,10 +20,12 @@ for (const file of commandFiles) {
   client.commands.set(command.data.name, command);
 }
 
+// activate the bot
 client.once('ready', () => {
   console.log('Ready!');
 });
 
+// listen for /slash commands
 client.on('interactionCreate', async interaction => {
   if (!interaction.isCommand()) return;
 
@@ -36,9 +41,12 @@ client.on('interactionCreate', async interaction => {
   }
 });
 
+// listen to channel messages
 client.on('messageCreate', async (message) => {
   if (message.author.bot) return;
-  message.channel.send(`Hi, there, ${message.author.username}`);
+
+  let pogCount = countPogs(message.content);
+  sendPogMessage(pogCount, message);
 });
 
 client.login(token);
