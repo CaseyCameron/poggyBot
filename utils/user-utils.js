@@ -36,7 +36,7 @@ async function findMostPogs() {
     ],
     raw: true,
   });
-  if (!mostPogs.username) {
+  if (!mostPogs[0].username) {
     return 'Nobody has any pogs. That\'s great!'
   } else {
     return `${mostPogs[0].username} has the most pogs with ${mostPogs[0].maxPogs} pogs`;
