@@ -4,9 +4,10 @@ const { Routes } = require('discord-api-types/v9');
 const { clientId, guildId, token } = require('./config.json');
 
 const commands = [
-  new SlashCommandBuilder().setName('pog').setDescription('Replies with pog count.'),
-  new SlashCommandBuilder().setName('server').setDescription('Replies with server info.'),
   new SlashCommandBuilder().setName('user').setDescription('Replies with user info.'),
+  new SlashCommandBuilder().setName('server').setDescription('Replies with server info.'),
+  new SlashCommandBuilder().setName('pogcount').setDescription('Replies with pog count.'),
+  new SlashCommandBuilder().setName('mostpogs').setDescription('Replies with user with most pogs.'),
 ]
   .map(command => command.toJSON());
 

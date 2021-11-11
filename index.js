@@ -1,7 +1,10 @@
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 const { token } = require('./config.json');
-const { countPogs, sendPogMessage } = require('./utils/bot-utils.js');
+const { checkForUser, countPogs, sendPogMessage } = require('./utils/index.js');
+const User = require('./models/User.js');
+
+User.sync();
 
 const client = new Client({
   intents: [
@@ -9,7 +12,6 @@ const client = new Client({
     Intents.FLAGS.GUILD_MESSAGES
   ]
 });
-
 
 // add /slash commands to a collection
 client.commands = new Collection();
@@ -46,6 +48,12 @@ client.on('messageCreate', async (message) => {
   if (message.author.bot) return;
 
   let pogCount = countPogs(message.content);
+
+  // error contingency
+  if (pogCount < 0) return;
+
+  checkForUser(pogCount, message);
+
   sendPogMessage(pogCount, message);
 });
 

@@ -8,18 +8,18 @@ function countPogs(message) {
   // increment pog count
   matchingTerms.map(word => {
     if (word.includes('pog')) pogCount += 1;
-    if (word.includes('pawg')) pogCount += 1;
   });
 
   return pogCount;
 };
 
 function sendPogMessage(pogCount, message) {
+  const username = message.author.username;
   if (pogCount > 0) {
     return message.channel.send(`
-      ${message.author.username} said pog ${pogCount} times. 
-      ${message.author.username} must really like pogs!
-      `);
+      ${username} said pog ${pogCount} times. 
+      ${username} must really like pogs!
+    `);
   }
 };
 
