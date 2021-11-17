@@ -1,11 +1,8 @@
 function countPogs(message) {
-  // initialize the pogCount
   let pogCount = 0;
 
-  // convert to lowercase
   const matchingTerms = message.toLowerCase().split(' ');
 
-  // increment pog count
   matchingTerms.map(word => {
     if (word.includes('pog')) pogCount += 1;
   });
@@ -15,7 +12,7 @@ function countPogs(message) {
 
 function sendPogMessage(pogCount, message) {
   const username = message.author.username;
-  if (pogCount > 0) {
+  if (pogCount) {
     return message.channel.send(`
       ${username} said pog ${pogCount} times. 
       ${username} must really like pogs!
