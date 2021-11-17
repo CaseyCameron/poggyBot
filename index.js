@@ -22,8 +22,6 @@ for (const file of commandFiles) {
   client.commands.set(command.data.name, command);
 }
 
-console.log(client.commands);
-
 // activate the bot
 client.once('ready', () => {
   console.log('Ready!');
