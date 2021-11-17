@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
-const { token } = require('./config.json');
 const { checkForUser, countPogs, sendPogMessage } = require('./utils/index.js');
+const { token } = require('./config.json');
 const User = require('./models/User.js');
 
 User.sync();
@@ -21,6 +21,8 @@ for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
   client.commands.set(command.data.name, command);
 }
+
+console.log(client.commands);
 
 // activate the bot
 client.once('ready', () => {
@@ -50,7 +52,7 @@ client.on('messageCreate', async (message) => {
   let pogCount = countPogs(message.content);
 
   // error contingency
-  if (pogCount < 0) return;
+  if (!pogCount) return;
 
   checkForUser(pogCount, message);
 

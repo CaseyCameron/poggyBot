@@ -4,13 +4,13 @@ const User = require('../models/User.js');
 async function checkForUser(pogCount, message) {
   let user = await User.findByPk(message.author.id);
   if (!user) {
-    createUser(message, pogCount);
+    createUser(pogCount, message);
   } else {
     await updateUser(pogCount, message, user);
   }
 };
 
-async function createUser(message, pogCount) {
+async function createUser(pogCount, message) {
   await User.create({
     username: message.author.username,
     discordId: message.author.id,
@@ -36,15 +36,15 @@ async function findMostPogs() {
     ],
     raw: true,
   });
-  if (!mostPogs.username) {
+  if (!mostPogs[0].username) {
     return 'Nobody has any pogs. That\'s great!'
   } else {
     return `${mostPogs[0].username} has the most pogs with ${mostPogs[0].maxPogs} pogs`;
   }
 };
 
-async function findUserPogs(username) {
-  const user = await User.findByPk(username);
+async function findUserPogs(discordId) {
+  const user = await User.findByPk(discordId);
   if (!user) {
     return 'You have no pogs. That\'s great!';
   } else {
